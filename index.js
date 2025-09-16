@@ -5,7 +5,7 @@ const {
   ActivityType,
 } = require("discord.js");
 const { userInfo } = require("os");
-const { env } = require("process");
+const { env } = require("dotenv").config();
 const mongoose = require("mongoose");
 const eventHandler = require("./handlers/eventHandler");
 const client = new Client({

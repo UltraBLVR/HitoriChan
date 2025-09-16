@@ -18,7 +18,6 @@ const client = new Client({
   ],
 });
 
-// messageCreate event is now handled by the event handler
 (async () => {
   console.log("Checking environment variables...");
   console.log("MONGODB_URI exists:", !!process.env.MONGODB_URI);

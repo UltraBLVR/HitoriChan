@@ -8,14 +8,14 @@ const words = [
 
 let messageCounter = 0;
 let messageThreshold = getRandomThreshold(); // random 50–100
-let isRoundActive = false; // 🔒 lock
+let isRoundActive = false;
 
 function getRandomThreshold() {
     return Math.floor(Math.random() * (100 - 10 + 1)) + 10; // 50–100
 }
 
 async function startRound(channel) {
-    isRoundActive = true; // lock so new games don't trigger
+    isRoundActive = true;
 
     const randomWord = words[Math.floor(Math.random() * words.length)];
     await channel.send(`⚡ First person to type **${randomWord}** wins a reward!`);
@@ -53,7 +53,7 @@ async function startRound(channel) {
         // reset for next round
         messageCounter = 0;
         messageThreshold = getRandomThreshold();
-        isRoundActive = false; // unlock ✅
+        isRoundActive = false;
 
         console.log(`🔄 Next game will trigger after ${messageThreshold} messages.`);
     });
@@ -72,7 +72,7 @@ module.exports = async (client) => {
     client.on('messageCreate', async (msg) => {
         if (msg.channel.id !== channelId || msg.author.bot) return;
 
-        if (isRoundActive) return; // 🚫 ignore while game is running
+        if (isRoundActive) return;
 
         messageCounter++;
         if (messageCounter >= messageThreshold) {

@@ -10,7 +10,7 @@ function getRandXp(min, max) {
 }
 
 module.exports = async (client, message) => {
-  if (!message.inGuild() || message.author.bot || coolDowns.has(message.author.id)) {
+  if (typeof message.guild === 'undefined' || message.author.bot || coolDowns.has(message.author.id)) {
     return;
   }
 

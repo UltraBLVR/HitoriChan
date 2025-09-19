@@ -22,7 +22,11 @@ function readWarnings() {
 
 module.exports = {
   name: "warns",
+  category: 'moderation',
   description: "View warnings for a user",
+  examples: [
+    "/warns @User"
+  ],
   options: [
     {
       name: "user",

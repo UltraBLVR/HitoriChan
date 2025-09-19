@@ -107,6 +107,11 @@ module.exports = {
 
   name: "pay",
   description: "Send money to another user",
+  category: 'economy',
+  examples: [
+    "/pay @User 500",
+    "/pay @User 50%"
+  ],
   options: [
     {
       name: "user",

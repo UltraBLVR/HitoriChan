@@ -148,7 +148,12 @@ module.exports = {
 
   name: "bank",
   description: "Manage your bank account",
-  ephermal: true,
+  category: 'economy',
+  examples: [
+    "/bank balance",
+    "/bank deposit 500",
+    "/bank withdraw all"
+  ],
   options: [
     {
       name: "action",

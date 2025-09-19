@@ -4,7 +4,12 @@ const Balance = require("../../models/user.js");
 
 module.exports = {
   name: "lb",
+  category: 'economy',
   description: "Shows the server leaderboard (levels, balance, etc.)",
+  examples: [
+    "/lb",
+    "/lb type:l"
+  ],
   options: [
     {
       name: "type",

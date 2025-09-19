@@ -3,6 +3,7 @@ const { ApplicationCommandOptionType } = require("discord.js")
 
 module.exports = {
   name: "membercount",
+  category: 'moderation',
   description: "Shows the server's member count",
   options: [
     {

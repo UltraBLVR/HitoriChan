@@ -4,7 +4,12 @@ const EmojiHandler = require("../../utils/emojiHandler");
 
 module.exports = {
   name: "emoji",
+  category: 'misc',
   description: "Use and get information about emojis (animated or static)",
+    examples: [
+      "/emoji add :smile:",
+      "/emoji list"
+    ],
   options: [
     {
       name: "action",

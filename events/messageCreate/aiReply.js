@@ -1,26 +1,20 @@
-// events/messageCreate/aiReply.js
 const { queryGroq } = require("../../ai/groq");
+const { checkCooldown } = require("../../utils/cooldowns");
 
 module.exports = async (client, message) => {
-  if (!message) return;
-  if (message.author.bot) return;
+  if (!message?.content || message.author.bot) return;
 
-  // Reply if the bot is mentioned anywhere in the message
   const mention = `<@${client.user.id}>`;
   let shouldReply = false;
   let userMessage = message.content;
 
+  // Check for direct mention
   if (message.content.includes(mention)) {
     userMessage = userMessage.replaceAll(mention, "").trim();
     shouldReply = true;
   }
-
-  // Reply if the message is a reply to the bot
-  if (
-    !shouldReply &&
-    message.reference &&
-    message.reference.messageId
-  ) {
+  // Check for reply to bot (only if not already triggered by mention)
+  else if (message.reference?.messageId) {
     try {
       const repliedMessage = await message.channel.messages.fetch(message.reference.messageId);
       if (repliedMessage.author.id === client.user.id) {
@@ -29,14 +23,28 @@ module.exports = async (client, message) => {
       }
     } catch (err) {
       // Ignore fetch errors
+      return;
     }
   }
 
-  if (shouldReply && userMessage) {
+  if (!shouldReply) return;
+
+  // Check cooldown for AI responses (5 seconds per user)
+  const cooldownLeft = checkCooldown(message.author.id, 'ai_reply', 5000);
+  if (cooldownLeft > 0) {
+    return message.reply(`Please wait ${cooldownLeft} seconds before asking me again! 🤖`);
+  }
+
+  if (!userMessage) {
+    return message.reply("yo, reply with a message 👀");
+  }
+
+  try {
     await message.channel.sendTyping();
     const reply = await queryGroq(userMessage);
     await message.reply(reply);
-  } else if (shouldReply && !userMessage) {
-    return message.reply("yo, reply with a message 👀");
+  } catch (error) {
+    console.error('AI reply error:', error);
+    await message.reply("Sorry, I'm having trouble thinking right now! 🤔");
   }
 };

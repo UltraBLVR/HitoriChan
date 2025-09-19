@@ -3,7 +3,12 @@ const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.j
 
 module.exports = {
   name: "timeout",
+  category: 'moderation',
   description: "Timeouts a user",
+  examples: [
+    "/timeout @User 10m spamming",
+    "/timeout @User 1d"
+  ],
   options: [
     {
       name: "user",

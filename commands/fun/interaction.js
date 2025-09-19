@@ -2,7 +2,12 @@ const { Client, ApplicationCommandOptionType, EmbedBuilder } = require("discord.
 
 module.exports = {
   name: "interaction",
+  category: 'fun',
   description: "Make some Bocchi flavor in chat!",
+  examples: [
+    "/interaction shy",
+    "/interaction chill"
+  ],
   options: [
     {
       name: "shy",

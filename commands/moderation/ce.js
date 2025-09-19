@@ -2,7 +2,12 @@ const { ApplicationCommandOptionType, PermissionFlagsBits, EmbedBuilder } = requ
 
 module.exports = {
   name: 'ce',
+  category: 'moderation',
   description: 'Creates a custom embed.',
+  examples: [
+    "/ce title:Hello description:World color:#FF00FF",
+    "/ce title:Rules description:Follow the rules color:#00FF00"
+  ],
   options: [
     {
       name: 'title',

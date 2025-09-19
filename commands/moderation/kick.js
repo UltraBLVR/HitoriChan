@@ -16,7 +16,7 @@ module.exports = {
     };
 
     if (targetUser.id === interaction.guild.ownerId) {
-      await interaction.editReply("THE FUVK YOU TRYING TO KICK THE OWNER? LIKE FR?!!?!?!?!!");
+      await interaction.editReply("THE FUCK YOU TRYING TO KICK THE OWNER? LIKE FR?!!?!?!?!!");
       
       return; 
     }
@@ -32,7 +32,7 @@ module.exports = {
     }
 
     if (targetUserRolePosition >= botRolePosition) {
-      await interaction.editReply("I can't lick that user because they have the same or higher role than me.");
+      await interaction.editReply("I can't kick that user because they have the same or higher role than me.");
       return;
     }
 
@@ -46,7 +46,12 @@ module.exports = {
   },
 
   name: "kick",
+  category: 'moderation',
   description: "Kicks a user from the server",
+  examples: [
+    "/kick @User rulebreak",
+    "/kick @User"
+  ],
   options: [
     {
       name: "user",
@@ -56,12 +61,12 @@ module.exports = {
     },
     {
       name: "reason",
-      description: "Resin to lick",
+      description: "Reason for kick",
       required: false,
       type: ApplicationCommandOptionType.String
     }
   ],
-  permissionsRequired: [PermissionFlagsBits.BanMembers],
+  permissionsRequired: [PermissionFlagsBits.KickMembers],
   botPermissions: [PermissionFlagsBits.Administrator],
 
 

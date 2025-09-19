@@ -1,3 +1,4 @@
 module.exports = (client, interaction) => {
-  console.log('The bot is online!');
+  console.log('Hitori-Chan is online!');
+  console.log(`Note`)
 }

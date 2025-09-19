@@ -124,11 +124,5 @@ Pull requests welcome. Small, focused changes are best (fixes, metadata addition
 
 This project does not include a license file. Add one if you plan to open-source the repository.
 
----
-If you'd like, I can also:
-- Add `usage` fields for every command (explicit usage), not just `examples`.
-- Make the help UI automatically detect categories from the filesystem.
-
-Which would you like me to do next?
 
 

@@ -193,6 +193,11 @@ module.exports = {
 
   name: "coinflip",
   description: "Flip a coin and gamble your coins",
+  category: 'economy',
+  examples: [
+    "/coinflip heads 500",
+    "/coinflip tails 50%"
+  ],
   options: [
     {
       name: "choice",

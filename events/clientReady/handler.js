@@ -9,6 +9,31 @@ module.exports = async (client) => {
   try {
     const applicationCommands = await getApplicationCommands(client, testServer);
 
+    // Helper to format options and their choices (handles nested subcommands)
+    const formatOption = (option) => {
+      const formatted = {
+        name: option.name,
+        description: option.description || '',
+        type: option.type,
+        required: !!option.required,
+      };
+
+      // Map choices to the expected shape and ensure values are strings or numbers
+      if (option.choices && Array.isArray(option.choices)) {
+        formatted.choices = option.choices.map((choice) => ({
+          name: String(choice.name),
+          value: typeof choice.value === 'number' ? choice.value : String(choice.value),
+        }));
+      }
+
+      // Support nested options (subcommands / subcommand groups)
+      if (option.options && Array.isArray(option.options)) {
+        formatted.options = option.options.map(formatOption);
+      }
+
+      return formatted;
+    };
+
     for (const localCommand of localCommands) {
       const { name, description, options } = localCommand;
 
@@ -28,17 +53,9 @@ module.exports = async (client) => {
             continue;
           }
 
+
           // Ensure options array is properly formatted before editing
-          const formattedOptions = localCommand.options?.map(option => {
-            const formattedOption = { ...option };
-
-            // Ensure choices is an array if it exists
-            if (option.choices && !Array.isArray(option.choices)) {
-              formattedOption.choices = [];
-            }
-
-            return formattedOption;
-          }) || [];
+          const formattedOptions = (localCommand.options || []).map(formatOption);
 
           await applicationCommands.edit(existingCommand.id, {
             description: localCommand.description,
@@ -50,17 +67,9 @@ module.exports = async (client) => {
             console.log(`Command "${name}" is up to date.`);
         }
       } else {
+
         // Ensure options array is properly formatted before creating
-        const formattedOptions = localCommand.options?.map(option => {
-          const formattedOption = { ...option };
-
-          // Ensure choices is an array if it exists
-          if (option.choices && !Array.isArray(option.choices)) {
-            formattedOption.choices = [];
-          }
-
-          return formattedOption;
-        }) || [];
+        const formattedOptions = (localCommand.options || []).map(formatOption);
 
         await applicationCommands.create({
           name: localCommand.name,

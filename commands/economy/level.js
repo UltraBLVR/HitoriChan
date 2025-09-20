@@ -59,7 +59,12 @@ module.exports = {
   },
   
   name: "level",
+  category: 'economy',
   description: "Shows your/someones level and XP",
+  examples: [
+    "/level",
+    "/level @User"
+  ],
   type: ApplicationCommandOptionType.Mentionable,
   options: [
     {

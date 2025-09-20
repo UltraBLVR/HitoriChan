@@ -130,7 +130,12 @@ module.exports = {
   },
 
   name: "shop",
+  category: 'economy',
   description: "Browse and buy items from the server shop",
+  examples: [
+    "/shop list",
+    "/shop buy item_id_here"
+  ],
   options: [
     {
       name: "action",

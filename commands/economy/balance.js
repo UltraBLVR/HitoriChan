@@ -53,6 +53,11 @@ module.exports = {
   
   name: "balance",
   description: "Shows your balance",
+  category: 'economy',
+  examples: [
+    "/balance",
+    "/balance @SomeUser"
+  ],
   options: [
     {
       name: "user",

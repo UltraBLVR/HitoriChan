@@ -1,6 +1,10 @@
 module.exports = {
   name: "ping",
+  category: 'misc',
   description: "Replies with Pong!",
+  examples: [
+    "/ping"
+  ],
   callback: async (client, interaction) => {
     const startTime = Date.now();
     

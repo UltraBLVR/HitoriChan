@@ -6,7 +6,11 @@ const getDailyAmount = () => Math.floor(Math.random() * (2500 - 1 + 1)) + 1;
 
 module.exports = {
   name: 'daily',
+  category: 'economy',
   description: 'Collect your dailies!',
+  examples: [
+    "/daily"
+  ],
   /**
    *
    * @param {Client} client

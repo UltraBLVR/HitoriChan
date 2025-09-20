@@ -2,7 +2,12 @@ const { ApplicationCommandOptionType, PermissionFlagsBits } = require("discord.j
 
 module.exports = {
   name: "say",
+  category: 'moderation',
   description: "Make the bot say something (custom text or clone a message by ID)",
+  examples: [
+    "/say Hello everyone!",
+    "/say channel:#announcements 123456789012345678"
+  ],
   options: [
     {
       name: "message",

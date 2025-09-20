@@ -31,7 +31,12 @@ function writeWarnings(warnings) {
 
 module.exports = {
   name: "clearwarn",
+  category: 'moderation',
   description: "Clear warnings from a user",
+  examples: [
+    "/clearwarn @User",
+    "/clearwarn @User 1234567890"
+  ],
   options: [
     {
       name: "user",

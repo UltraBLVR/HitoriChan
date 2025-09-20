@@ -1,39 +1,45 @@
-// events/messageCreate/aiReply.js
-
 const { queryGroq } = require("../../ai/groq");
 const AiMsgHistory = require("../../models/aiMsgHistory");
-
+const { checkCooldown } = require("../../utils/cooldowns");
 
 module.exports = async (client, message) => {
-  if (!message) return;
-  if (message.author.bot) return;
+  if (!message?.content || message.author.bot) return;
 
   const mention = `<@${client.user.id}>`;
   let shouldReply = false;
   let userMessage = message.content;
 
+  // Check for direct mention
   if (message.content.includes(mention)) {
     userMessage = userMessage.replaceAll(mention, "").trim();
     shouldReply = true;
-  }
-
-  if (
-    !shouldReply &&
-    message.reference &&
-    message.reference.messageId
-  ) {
+  } else if (message.reference?.messageId) {
     try {
-      const repliedMessage = await message.channel.messages.fetch(message.reference.messageId);
+      const repliedMessage = await message.channel.messages.fetch(
+        message.reference.messageId
+      );
       if (repliedMessage.author.id === client.user.id) {
         shouldReply = true;
         userMessage = userMessage.trim();
       }
     } catch (err) {
       // Ignore fetch errors
+      return;
     }
   }
 
-  if (shouldReply && userMessage) {
+  if (!shouldReply) return;
+
+  const cooldownLeft = checkCooldown(message.author.id, "ai_reply", 5000);
+  if (cooldownLeft > 0) {
+    return message.reply(
+      `Please wait ${cooldownLeft} seconds before asking me again! 🤖`
+    );
+  }
+
+  if (!userMessage) return;
+
+  try {
     await message.channel.sendTyping();
 
     // --- AI message history logic ---
@@ -46,7 +52,6 @@ module.exports = async (client, message) => {
 
     // Add the new message to history
     historyDoc.messages.push({ role: "user", content: userMessage });
-    // Keep only the last 10 messages
     if (historyDoc.messages.length > 10) {
       historyDoc.messages = historyDoc.messages.slice(-10);
     }
@@ -66,7 +71,8 @@ module.exports = async (client, message) => {
     await historyDoc.save();
 
     await message.reply(reply);
-  } else if (shouldReply && !userMessage) {
-    return message.reply("yo, reply with a message 👀");
+  } catch (error) {
+    console.error("AI reply error:", error);
+    await message.reply("Sorry, I'm having trouble thinking right now! 🤔");
   }
 };

@@ -1,7 +1,7 @@
 
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ComponentType } = require('discord.js');
-const getLocalCommands = require('../utils/getLocalCommands');
 const getLocalCommands = require('../../utils/getLocalCommands');
+
 // Cache command metadata to avoid rebuilding on every interaction
 let cachedCommandsMeta = null;
 let cacheTimestamp = 0;
@@ -66,6 +66,7 @@ module.exports = {
       .setCustomId('help_select')
       .setPlaceholder('Select the category you want help with')
       .addOptions([
+        { label: 'How to use PREFIX commands', description: 'Using commands with prefixes', value: 'prefix', emoji: '❓' },
         { label: 'Economy', description: 'Balance, bank, pay, shop, etc.', value: 'economy', emoji: '💰' },
         { label: 'Fun', description: 'Interaction commands and gifs', value: 'fun', emoji: '🎉' },
         { label: 'Misc', description: 'Ping, emoji tools and utilities', value: 'misc', emoji: '🛠️' },

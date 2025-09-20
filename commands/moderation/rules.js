@@ -3,7 +3,11 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
   name: 'rules',
+  category: 'moderation',
   description: 'Display the server rules!',
+  examples: [
+    "/rules"
+  ],
   
   callback: async (client, interaction) => {
     const isSlashCommand = interaction.isChatInputCommand && interaction.isChatInputCommand();

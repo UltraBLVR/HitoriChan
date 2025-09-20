@@ -31,7 +31,12 @@ function writeWarnings(warnings) {
 
 module.exports = {
   name: "warn",
+  category: 'moderation',
   description: "Warn a user",
+  examples: [
+    "/warn @User inappropriate",
+    "/warn @User"
+  ],
   options: [
     {
       name: "user",

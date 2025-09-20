@@ -46,6 +46,11 @@ module.exports = {
   
   name: "ban",
   description: "Bans a user from the server",
+  category: 'moderation',
+  examples: [
+    "/ban @User spamming",
+    "/ban @User"
+  ],
   options: [
     {
       name: "user",
@@ -55,7 +60,7 @@ module.exports = {
     },
     {
       name: "reason",
-      description: "Resain to bna",
+      description: "Reason for ban",
       required: false,
       type: ApplicationCommandOptionType.String
     }

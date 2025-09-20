@@ -9,7 +9,12 @@
     "lint": "echo 'Linting not configured'",
     "test": "echo 'Tests not configured'"
   },
-  "keywords": ["discord", "bot", "bocchi", "anime"],
+  "keywords": [
+    "discord",
+    "bot",
+    "bocchi",
+    "anime"
+  ],
   "author": "HitoriChan Dev",
   "license": "MIT",
   "engines": {
@@ -20,6 +25,7 @@
     "canvacord": "^6.0.3",
     "discord.js": "^14.22.1",
     "dotenv": "^17.2.2",
+    "forever": "^1.0.1",
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.1",
     "ms": "^2.1.3",

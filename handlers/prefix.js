@@ -34,9 +34,12 @@ class PrefixHandler {
     // Handle shortened commands
     const shortCommands = {
       'cf': 'coinflip',
-      'b': 'bank',
+      'b': 'balance',
       'p': 'pay',
-      'd': 'daily'
+      'd': 'daily',
+      'mc': 'membercount',
+      'top': 'leaderboard',
+      'bk': 'bank'
     };
     
     const actualCommandName = shortCommands[commandName] || commandName;
@@ -217,7 +220,7 @@ class PrefixHandler {
               if (['balance', 'deposit', 'withdraw'].includes(actionValue)) {
                 return { value: actionValue };
               }
-              return 
+              return { value: 'balance' };
             }
             if (name === 'amount') {
               const amountRaw = args[1];

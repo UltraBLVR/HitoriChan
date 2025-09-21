@@ -1,6 +1,7 @@
 
 const path = require('path');
 const getAllFiles = require('./getAllFiles');
+const { get } = require('http');
 
 module.exports = (exceptions = []) => {
   let localCommands = [];
@@ -9,6 +10,12 @@ module.exports = (exceptions = []) => {
     path.join(__dirname, '..', 'commands'),
     true
   );
+
+  const helpCommand = require(path.join(__dirname, '..', 'commands', 'help.js'));
+
+  if (!exceptions.includes(helpCommand.name)) {
+    localCommands.push(helpCommand);
+  }
 
   for (const commandCategory of commandCategories) {
     const commandFiles = getAllFiles(commandCategory);

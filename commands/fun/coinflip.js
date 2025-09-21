@@ -35,16 +35,14 @@ module.exports = {
 
       if (!choiceOption) {
         await interaction.reply({
-          content: "❌ Please specify a valid choice (heads/h or tails/t)!",
-          ephemeral: true
+          content: "Argument error: Please specify heads or tails!" + "\n" + "Usage: `/coinflip <heads/tails> <amount>`",
         });
         return;
       }
 
       if (!amountOption) {
         await interaction.reply({
-          content: "❌ Please specify an amount to bet!",
-          ephemeral: true
+          content: "Argument error: Please specify an amount to bet!" + "\n" + "Usage: `/coinflip <heads/tails> <amount>`",
         });
         return;
       }

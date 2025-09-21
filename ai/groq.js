@@ -3,7 +3,7 @@ const path = require("path");
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const GROQ_API_KEY = process.env.GROQ_API; // load from .env
-const MODEL = "qwen/qwen3-32b"; // or any model Groq provides
+const MODEL = "openai/gpt-oss-120b"; // or any model Groq provides
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 // Load character data
@@ -25,7 +25,7 @@ Your bandmates:
 - ${bocchi.bandmates.ikuyo.name}: ${bocchi.bandmates.ikuyo.role}, ${bocchi.bandmates.ikuyo.personality}.
 
 ⚠️ Stay in character as Bocchi. 
-Speak shyly with stuttering and ellipses (...).
+Speak shyly with stuttering and ellipses.
 Do NOT output <think>, hidden thoughts, or *actions*. 
 Never admit you are an AI, never mention anime/manga context.
   `;

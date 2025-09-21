@@ -58,6 +58,14 @@ class PrefixHandler {
       }
       return; // exit early
     }
+    if (commandName === 'help') {
+      try {
+        await message.reply('sorry, but the "help" command is not available as a prefix command due to its limitations. Please use the "/help" slash command instead.');
+      } catch (e) {
+        console.error('Failed to reply about help prefix command:', e);
+      }
+      return;
+    }
     
     // Check user permissions
     if (commandObject.permissionsRequired?.length) {
@@ -187,10 +195,6 @@ class PrefixHandler {
           if (!commandObject.options) return null;
 
           // Special handling for specific commands
-          if (commandName === 'help') {
-            message.reply('Command "help" is not availabe as a prefix command due to the prefix limits, please use ``/help`` instead.');
-            return null;
-          }
           if (commandName === 'coinflip' || commandName === 'cf') {
             if (name === 'choice') {
               const choiceValue = args[0];

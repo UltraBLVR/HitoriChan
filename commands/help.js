@@ -1,6 +1,6 @@
 
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ComponentType } = require('discord.js');
-const getLocalCommands = require('../../utils/getLocalCommands.js');
+const getLocalCommands = require('../utils/getLocalCommands.js');
 // Cache command metadata to avoid rebuilding on every interaction
 let cachedCommandsMeta = null;
 let cacheTimestamp = 0;

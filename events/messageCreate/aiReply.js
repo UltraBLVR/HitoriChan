@@ -1,5 +1,6 @@
 const { queryGroq } = require("../../ai/groq");
-const AiMsgHistory = require("../../models/aiMsgHistory");
+const messageHistory = require("../../models/messageHistory");
+const AiMsgHistory = require("../../models/messageHistory");
 const { checkCooldown } = require("../../utils/cooldowns");
 
 module.exports = async (client, message) => {
@@ -33,7 +34,7 @@ module.exports = async (client, message) => {
   const cooldownLeft = checkCooldown(message.author.id, "ai_reply", 5000);
   if (cooldownLeft > 0) {
     return message.reply(
-      `Please wait ${cooldownLeft} seconds before asking me again! 🤖`
+      `Please wait ${cooldownLeft} seconds before asking me again!`
     );
   }
 
@@ -47,7 +48,7 @@ module.exports = async (client, message) => {
     const guildId = message.guild ? message.guild.id : "dm";
     let historyDoc = await AiMsgHistory.findOne({ userId, guildId });
     if (!historyDoc) {
-      historyDoc = new AiMsgHistory({ userId, guildId, messages: [] });
+      historyDoc = new messageHistory({ userId, guildId, messages: [] });
     }
 
     // Add the new message to history

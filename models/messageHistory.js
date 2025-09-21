@@ -16,4 +16,4 @@ const messageHistorySchema = new Schema({
     },
 }, { timestamps: true });
 
-module.exports = model('AiMsgHistory', messageHistorySchema);
+module.exports = model('messageHistory', messageHistorySchema);

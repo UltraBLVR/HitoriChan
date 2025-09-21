@@ -2,7 +2,7 @@
 const getLocalCommands = require('../utils/getLocalCommands');
 
 class PrefixHandler {
-  constructor(prefix = '*') {
+  constructor(prefix = '&') {
     this.prefix = prefix;
     this.localCommands = null;
   }
@@ -203,13 +203,13 @@ class PrefixHandler {
             }
           }
           
-          if (commandName === 'bank' || commandName === 'b') {
+          if (commandName === 'bank' || commandName === 'bk') {
             if (name === 'action') {
               const actionValue = args[0];
               if (['balance', 'deposit', 'withdraw'].includes(actionValue)) {
                 return { value: actionValue };
               }
-              return { value: 'balance' };
+              return 
             }
             if (name === 'amount') {
               const amountRaw = args[1];

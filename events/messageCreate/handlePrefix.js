@@ -1,7 +1,7 @@
 const getLocalCommands = require('../../utils/getLocalCommands');
 const PrefixHandler = require('../../handlers/prefix');
 
-const prefixHandler = new PrefixHandler('*');
+const prefixHandler = new PrefixHandler('&');
 
 module.exports = async (client, message) => {
   if (message.author.bot) return;

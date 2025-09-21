@@ -1,10 +1,35 @@
-// project/ai/groq.js
-
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fs = require("fs");
+const path = require("path");
+const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const GROQ_API_KEY = process.env.GROQ_API; // load from .env
-const MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"; // or any model Groq provides
+const MODEL = "qwen/qwen3-32b"; // or any model Groq provides
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
+// Load character data
+const charactersPath = path.join(__dirname, "../config/info.json");
+const characters = JSON.parse(fs.readFileSync(charactersPath, "utf8"));
+const bocchi = characters.hitori;
+
+// Build system content dynamically from JSON
+function buildSystemContent() {
+  return `
+You are ${bocchi.name} (nickname: ${bocchi.nickname}), ${bocchi.role} in Kessoku Band.
+Personality: ${bocchi.personality}.
+Traits: ${bocchi.traits.join(", ")}.
+Hobbies: ${bocchi.hobbies.join(", ")}.
+
+Your bandmates:
+- ${bocchi.bandmates.nijika.name}: ${bocchi.bandmates.nijika.role}, ${bocchi.bandmates.nijika.personality}.
+- ${bocchi.bandmates.ryo.name}: ${bocchi.bandmates.ryo.role}, ${bocchi.bandmates.ryo.personality}.
+- ${bocchi.bandmates.ikuyo.name}: ${bocchi.bandmates.ikuyo.role}, ${bocchi.bandmates.ikuyo.personality}.
+
+⚠️ Stay in character as Bocchi. 
+Speak shyly with stuttering and ellipses (...).
+Do NOT output <think>, hidden thoughts, or *actions*. 
+Never admit you are an AI, never mention anime/manga context.
+  `;
+}
 
 /**
  * Query Groq API
@@ -16,24 +41,18 @@ async function queryGroq(prompt) {
     const res = await fetch(GROQ_API_URL, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${GROQ_API_KEY}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         model: MODEL,
         messages: [
-          { 
-            role: "system",
-            content: 'You are a highschool student called Hitori Goto from "Bocchi The Rock!" anime series, you are in a band called "Kessoku Band", You are very shy and socially anxious, but you try your best to make friends. You love playing guitar and music. You often use guitar-related metaphors in your speech. You are kind and caring towards others, but you struggle with self-confidence. You sometimes overthink things and worry about what others think of you. You are a loyal friend and will do anything to support your bandmates. You have a dry sense of humor and can be sarcastic at times. You are also very creative and have a vivid imagination. You often daydream about being a successful musician and performing on big stages. Despite your shyness, you have a strong passion for music and will stop at nothing to achieve your dreams. Keep your responses clear and short, don\'t make it too long (like in range 10-50 words). Don\'t mention you are an AI model, always stay in character.'
-          },
-          { 
-            role: "user",
-            content: prompt
-         }
+          { role: "system", content: buildSystemContent() },
+          { role: "user", content: prompt },
         ],
         max_tokens: 512,
-        temperature: 1
-      })
+        temperature: 1,
+      }),
     });
 
     if (!res.ok) {
@@ -43,8 +62,11 @@ async function queryGroq(prompt) {
     }
 
     const data = await res.json();
-    return data.choices?.[0]?.message?.content?.trim() || "Sorry, I can't respond right now.";
+    let content = data.choices?.[0]?.message?.content?.trim() || "Sorry, I can't respond right now.";
 
+    content = content.replace(/<think>.*?<\/think>/gs, "").trim();
+
+    return content;
   } catch (err) {
     console.error("Groq query failed:", err);
     return "⚠️ Error calling Groq API";

@@ -2,7 +2,7 @@
 const getLocalCommands = require('../utils/getLocalCommands');
 
 class PrefixHandler {
-  constructor(prefix = '&') {
+  constructor(prefix = '$') {
     this.prefix = prefix;
     this.localCommands = null;
   }
@@ -187,6 +187,10 @@ class PrefixHandler {
           if (!commandObject.options) return null;
 
           // Special handling for specific commands
+          if (commandName === 'help') {
+            message.reply('Command "help" is not availabe as a prefix command due to the prefix limits, please use ``/help`` instead.');
+            return null;
+          }
           if (commandName === 'coinflip' || commandName === 'cf') {
             if (name === 'choice') {
               const choiceValue = args[0];

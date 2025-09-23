@@ -2,7 +2,7 @@ const { ActivityType } = require("discord.js");
 
 module.exports = (client) => {
   client.user.setActivity({
-    name: "*help for help",
-    type: ActivityType.Listening,
+    name: "| For help, type /help, nothing special lol 😭",
+    type: ActivityType.Watching,
   });
 };

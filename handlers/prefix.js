@@ -2,7 +2,7 @@
 const getLocalCommands = require('../utils/getLocalCommands');
 
 class PrefixHandler {
-  constructor(prefix = '$') {
+  constructor(prefix = '_') {
     this.prefix = prefix;
     this.localCommands = null;
   }

@@ -1,10 +1,9 @@
 # HitoriChan
-<<<<<<< HEAD
+
 BocchiChan is a fan-made Bocchi The Rock Discord bot!
 **Recent Updates**
 1. Ai Enabled
 2. Message history DataBase
-=======
 
 A Discord bot (Bocchi-themed) used for moderation, economy, and fun interactions. This README covers setup, running the bot, how commands are structured, and how to re-register slash commands so Discord sees choices/options.
 

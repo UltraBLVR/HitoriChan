@@ -39,7 +39,8 @@ class PrefixHandler {
       'd': 'daily',
       'mc': 'membercount',
       'top': 'leaderboard',
-      'bk': 'bank'
+      'bk': 'bank',
+      '8b': '8ball'
     };
     
     const actualCommandName = shortCommands[commandName] || commandName;
@@ -252,7 +253,7 @@ class PrefixHandler {
                 }
 
                 if (!user) {
-                  console.log('yes')
+                  return message.reply("You cannot pay to the air, mention someone.")
                 }
                 return { value: userValue };
               }
@@ -308,7 +309,7 @@ class PrefixHandler {
           if (optionIndex === -1) return null;
 
           // Handle reason field specially - join remaining args
-          if (name === 'reason') {
+          if (name === 'reason' || name === 'input') {
             const reasonArgs = args.slice(optionIndex);
             return reasonArgs.length > 0 ? { value: reasonArgs.join(' ') } : null;
           }

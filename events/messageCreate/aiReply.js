@@ -1,7 +1,6 @@
 const { queryGroq } = require("../../ai/groq");
-const messageHistory = require("../../models/messageHistory");
-const AiMsgHistory = require("../../models/messageHistory");
-const { checkCooldown } = require("../../utils/cooldowns");
+const messageHistory = require("../../models/messageHistory.js");
+const { checkCooldown } = require("../../utils/cooldowns.js");
 
 module.exports = async (client, message) => {
   if (!message?.content || message.author.bot) return;
@@ -12,7 +11,7 @@ module.exports = async (client, message) => {
 
   // Check for direct mention
   if (message.content.includes(mention)) {
-    userMessage = userMessage.replaceAll(mention, "").trim();
+    userMessage = userMessage.replace(new RegExp(mention, "g"), "").trim()
     shouldReply = true;
   } else if (message.reference?.messageId) {
     try {
@@ -46,9 +45,10 @@ module.exports = async (client, message) => {
     // --- AI message history logic ---
     const userId = message.author.id;
     const guildId = message.guild ? message.guild.id : "dm";
-    let historyDoc = await AiMsgHistory.findOne({ userId, guildId });
+    const channelId = message.channel.id;
+    let historyDoc = await messageHistory.findOne({ userId, guildId, channelId });
     if (!historyDoc) {
-      historyDoc = new messageHistory({ userId, guildId, messages: [] });
+      historyDoc = new messageHistory({ userId, guildId, channelId, messages: [] });
     }
 
     // Add the new message to history
@@ -59,21 +59,24 @@ module.exports = async (client, message) => {
     await historyDoc.save();
 
     // Prepare context for the AI
-    const contextMessages = historyDoc.messages.map(m => m.content).join("\n");
+    const contextMessages = historyDoc.messages
+      .map(m => `${m.role}: ${m.content}`)
+      .join("\n");
+
     const aiInput = contextMessages;
 
     const reply = await queryGroq(aiInput);
 
     // Add the bot's reply to history
     historyDoc.messages.push({ role: "assistant", content: reply });
-    if (historyDoc.messages.length > 10) {
-      historyDoc.messages = historyDoc.messages.slice(-10);
+    if (historyDoc.messages.length > 251) {
+      historyDoc.messages = historyDoc.messages.slice(-251);
     }
     await historyDoc.save();
 
     await message.reply(reply);
   } catch (error) {
     console.error("AI reply error:", error);
-    await message.reply("Sorry, I'm having trouble thinking right now! 🤔");
+    await message.reply("There is an error, please contact the developers to notify.");
   }
 };

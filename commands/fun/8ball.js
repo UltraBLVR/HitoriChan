@@ -24,26 +24,32 @@ module.exports = {
         }
         // Identifying the input & output
         const answer = [
-            "Yes",
-            "No",
-            "Sure",
-            "Alright",
-            "Maybe",
-            "Never",
-            "NO??",
-            "Hell no",
-            "Like hell if it was a yes.",
-            "Yes, smash.",
-            "Mhm",
-            "Perhaps",
-            "I'm not sure",
-            "That's doubtful enough",
-            "Absolutely not",
+            "Yes",                          //1
+            "Yeah",
+            "Ye",                           //3
             "Absolutely!",
-            "Nuh uh",
-            "Uhh... I don't know.",
-            "Ask me later",
-            "Your questions are pmo"
+            "Of course!",                   //5
+            "Hell yeah!",
+            "My sources say yes.",          //7
+            "Most likely yes",
+
+            "Maybe",                        //1
+            "Perhaps",
+            "I don't think so.",            //3
+            "I don't know.",
+            "Ask me later",                 //5
+            "Very doubtful...",
+            "Hmm...",                       //7
+            "Uhh...",
+            
+            "No.",                          //1
+            "Nah",
+            "Nope",                         //3
+            "Absolutely not.",
+            "Never",                        //5
+            "Hell no.",
+            "My sources say no.",           //7
+            "Hell if it was a yes.",
         ]
         const answerRand = Math.floor(Math.random() * answer.length)
         const response = answer[answerRand]
@@ -56,7 +62,7 @@ module.exports = {
             { name: "Your input:", value: `${userINPUT}` },
             { name: "Answer:", value: `${response}` }
         )
-        .setColor('#bf0fbe')
+        .setColor('#ff83e4')
 
         interaction.reply( { embeds : [ eballEmbed ] } )
     }

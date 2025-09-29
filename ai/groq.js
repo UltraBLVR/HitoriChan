@@ -51,7 +51,7 @@ async function queryGroq(prompt) {
           { role: "system", content: buildSystemContent() },
           { role: "user", content: prompt },
         ],
-        max_tokens: 512,
+        max_tokens: 1028,
         temperature: 1,
       }),
     });

@@ -59,8 +59,8 @@ module.exports = {
         const eballEmbed = new EmbedBuilder()
         .setDescription('## 🎱 Hitori Chan - 8ball\nNote: All the answers are randomized, don\'t take it personally.')
         .addFields(
-            { name: "Your input:", value: `${userINPUT}` },
-            { name: "Answer:", value: `${response}` }
+            { name: "Your question:", value: `${userINPUT}` },
+            { name: "The answer:", value: `${response}` }
         )
         .setColor('#ff83e4')
 

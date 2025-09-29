@@ -4,6 +4,9 @@ const { joinVoiceChannel, getVoiceConnection } = require('@discordjs/voice');
 module.exports = {
     name: "join",
     description: "Bot joins your voice channel",
+    example: [
+        "/join"
+    ],
     callback: async (client, interaction) => {
         const channel = interaction.member.voice.channel;
         const connection = getVoiceConnection(interaction.guild.id)

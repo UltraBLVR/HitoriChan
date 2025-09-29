@@ -26,7 +26,8 @@ const buildCommandsMeta = () => {
   const categoryMap = {
     economy: ['balance','bank','daily','level','pay','shop'],
     fun: ['interaction', 'coinflip'],
-    misc: ['help','ping','lb']
+    misc: ['help','ping','lb'],
+    voice: ['join', 'leave']
   };
 
   for (const cmd of rawCommands) {
@@ -69,6 +70,7 @@ module.exports = {
         { label: 'Fun', description: 'Interaction commands and gifs', value: 'fun', emoji: '🎉' },
         { label: 'Misc', description: 'Ping, emoji tools and utilities', value: 'misc', emoji: '🛠️' },
         { label: 'Moderation', description: 'Ban, kick, warn and moderation tools', value: 'moderation', emoji: '🔨' },
+        { label: 'Voice', description: 'Add the bot in your voice chat! (BETA)', value: 'voice', emoji: '🎤' },
       ]);
 
     const row = new ActionRowBuilder().addComponents(select);
@@ -86,7 +88,8 @@ module.exports = {
       economy: '#00AAFF',
       fun: '#FF69B4', 
       misc: '#7FFF00',
-      moderation: '#FF4500'
+      moderation: '#FF4500',
+      voice: '#a08ede'
     };
 
     collector.on('collect', async (i) => {

@@ -3,6 +3,9 @@ const { getVoiceConnection } = require('@discordjs/voice');
 module.exports = {
     name: "leave",
     description: "Bot leaves the voice channel",
+    example: [
+        "/leave"
+    ],
     callback: async (client, interaction) => {
         const connection = getVoiceConnection(interaction.guild.id);
 
